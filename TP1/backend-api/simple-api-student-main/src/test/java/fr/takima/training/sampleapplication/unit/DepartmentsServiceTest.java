@@ -24,12 +24,12 @@ class DepartmentsServiceTest {
 
     private final Department DEPARTMENT = Department.builder()
             .id(1L)
-            .name("DepartementTest1")
+            .name("DepartementTest")
             .build();
 
     @Test
     void testGetDepartmentByName() {
-        when(departmentDAO.findDepartmentByName("DepartmentTest")).thenReturn(DEPARTMENT);
+        when(departmentDAO.findDepartmentByName("DepartmentTest")).thenReturn(null); // This will cause the test to fail
         assertEquals(DEPARTMENT, departmentDAO.findDepartmentByName("DepartmentTest"));
     }
 
