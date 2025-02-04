@@ -33,5 +33,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=etiennechz Dsonar.organization=EtienneCHZ
-        working-directory: TP1/backend-api/simple-api-student-main
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=etiennechz -Dsonar.organization=EtienneChz -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./TP1/backend-api/simple-api-student-main/pom.xml
