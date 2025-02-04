@@ -24,7 +24,7 @@ class DepartmentsServiceTest {
 
     private final Department DEPARTMENT = Department.builder()
             .id(1L)
-            .name("DepartementTest")
+            .name("DepartementTest1")
             .build();
 
     @Test
