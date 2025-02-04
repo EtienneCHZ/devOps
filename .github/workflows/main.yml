@@ -1,6 +1,5 @@
 name: CI devops 2025
 on:
-  # Lancer ce workflow sur les branches main et develop
   push:
     branches:
       - main
@@ -11,65 +10,51 @@ jobs:
   test-backend: 
     runs-on: ubuntu-22.04
     steps:
-      # Checkout du code source
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Installation de JDK 21
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
 
-      # Build et test du projet avec Maven
       - name: Build and test with Maven
         run: mvn clean verify
         working-directory: TP1/backend-api/simple-api-student-main
 
-  # Définition du job pour construire et publier une image Docker
   build-and-push-docker-image:
-    needs: test-backend  # Exécute ce job seulement si 'test-backend' réussit
-    runs-on: ubuntu-22.04  # Environnement d'exécution
+    needs: test-backend
+    runs-on: ubuntu-22.04
 
     steps:
-      # Étape 1 : Récupération du code source
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Étape 2 : Connexion à Docker Hub avec les credentials stockés dans les secrets GitHub
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # Connexion à Docker Hub
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Étape 3 : Build et push de l'image Docker pour le backend
+      # Build et push de l'image Docker pour le backend
       - name: Build image and push backend
         uses: docker/build-push-action@v5
         with:
-          context: TP1/backend-api/simple-api-student-main  
-          push: true  # Push l'image sur Docker Hub
+          context: TP1/backend-api/simple-api-student-main
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:cache
-          cache-to: type=inline
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      # Étape 4 : Build et push de l'image Docker pour la base de données
+      # Build et push de l'image Docker pour la base de données
       - name: Build image and push database
         uses: docker/build-push-action@v5
         with:
           context: TP1/database
-          push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:cache
-          cache-to: type=inline
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      # Étape 5 : Build et push de l'image Docker pour httpd (serveur Apache)
+      # Build et push de l'image Docker pour httpd
       - name: Build image and push httpd
         uses: docker/build-push-action@v5
         with:
-          context: TP1/http-server
-          push: true
+          context: TP1/httpd
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:cache
-          cache-to: type=inline
+          push: ${{ github.ref == 'refs/heads/main' }}
