@@ -27,7 +27,7 @@ jobs:
       - name: Get current version from pom.xml
         id: version
         run: |
-          VERSION=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='version']/text()" tp-1/java/simple-api-student/pom.xml)
+          VERSION=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='version']/text()" TP1/backend-api/simple-api-student/pom.xml)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Increment version
@@ -39,13 +39,13 @@ jobs:
 
       - name: Update pom.xml with new version
         run: |
-          sed -i "s|<version>${{ env.VERSION }}</version>|<version>${{ env.NEW_VERSION }}</version>|g" tp-1/java/simple-api-student/pom.xml
+          sed -i "s|<version>${{ env.VERSION }}</version>|<version>${{ env.NEW_VERSION }}</version>|g" TP1/backend-api/simple-api-student/pom.xml
 
       - name: Commit and push new version
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add tp-1/java/simple-api-student/pom.xml
+          git add TP1/backend-api/simple-api-student/pom.xml
           git commit -m "Bump version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin main --tags
