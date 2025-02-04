@@ -26,3 +26,4 @@ jobs:
         run: |
           cd TP1\backend-api\simple-api-student-main
           mvn clean verify
+          #working-directory: TP1\backend-api\simple-api-student-main
