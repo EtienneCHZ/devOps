@@ -23,7 +23,5 @@ jobs:
 
       # Build et test du projet avec Maven
       - name: Build and test with Maven
-        run: |
-          cd TP1/backend-api/simple-api-student-main
-          mvn clean verify
-          #working-directory: TP1\backend-api\simple-api-student-main
+        run: mvn clean verify
+        working-directory: TP1/backend-api/simple-api-student-main
