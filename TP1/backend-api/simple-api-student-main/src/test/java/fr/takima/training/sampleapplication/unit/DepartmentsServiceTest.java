@@ -29,7 +29,7 @@ class DepartmentsServiceTest {
 
     @Test
     void testGetDepartmentByName() {
-        when(departmentDAO.findDepartmentByName("DepartmentTest")).thenReturn(null); // This will cause the test to fail
+        when(departmentDAO.findDepartmentByName("DepartmentTest")).thenReturn(DEPARTMENT);
         assertEquals(DEPARTMENT, departmentDAO.findDepartmentByName("DepartmentTest"));
     }
 
