@@ -18,10 +18,11 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '21'
 
       # Build et test du projet avec Maven
       - name: Build and test with Maven
-        run: mvn verify
-        working-directory: TP1\backend-api\simple-api-student-main
+        run: |
+          cd TP1\backend-api\simple-api-student-main
+          mvn clean verify
