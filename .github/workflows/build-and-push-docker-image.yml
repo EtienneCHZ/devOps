@@ -53,20 +53,26 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v3
         with:
-          context: TP1/backend-api/simple-api-student-main
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-backend:latest
+          context: TP1/backend-api/simple-api-student-main 
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-backend:${{ env.NEW_VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-backend:latest
           push: true
 
       - name: Build and push database image
         uses: docker/build-push-action@v3
         with:
           context: TP1/database
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-database:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-database:${{ env.NEW_VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-database:latest
           push: true
 
       - name: Build and push httpd image
         uses: docker/build-push-action@v3
         with:
           context: TP1/http-server
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-httpd:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-httpd:${{ env.NEW_VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-httpd:latest
           push: true
