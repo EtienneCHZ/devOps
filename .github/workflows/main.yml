@@ -24,3 +24,4 @@ jobs:
       # Build et test du projet avec Maven
       - name: Build and test with Maven
         run: mvn verify
+        working-directory: TP1\backend-api\simple-api-student-main
