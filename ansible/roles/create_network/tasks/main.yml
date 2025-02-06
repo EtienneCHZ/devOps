@@ -1,0 +1,14 @@
+---
+- name: Créer un réseau Docker
+  docker_network:
+    name: front-network
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Créer un deuxième réseau Docker
+  docker_network:
+    name: back-network
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

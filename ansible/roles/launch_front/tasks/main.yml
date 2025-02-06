@@ -1,0 +1,7 @@
+- name: Déployer le conteneur Frontend
+  docker_container:
+    name: frontend
+    image: etiennechz/devops-front:latest 
+    pull: yes
+    networks:
+      - name: front-network

@@ -1,0 +1,17 @@
+---
+- name: Démarrer l'application
+  docker_container:
+    name: tp1-backend-1
+    image: etiennechz/tp-backend:latest
+    pull: true
+    env:
+      SPRING_DATASOURCE_URL: "{{ SPRING_DATASOURCE_URL }}"
+      SPRING_DATASOURCE_USERNAME: "{{ SPRING_DATASOURCE_USERNAME }}"
+      SPRING_DATASOURCE_PASSWORD: "{{ SPRING_DATASOURCE_PASSWORD }}"
+      # SPRING_DATASOURCE_URL: jdbc:postgresql://tp1-database-1:5432/db
+      # SPRING_DATASOURCE_USERNAME: usr
+      # SPRING_DATASOURCE_PASSWORD: pwd
+    networks:
+      - name: front-network
+      - name: back-network
+    restart_policy: always

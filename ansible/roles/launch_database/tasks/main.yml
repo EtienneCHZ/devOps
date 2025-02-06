@@ -1,0 +1,13 @@
+---
+- name: Démarrer le conteneur PostgreSQL
+  docker_container:
+    name: tp1-database-1
+    image: etiennechz/tp-database:latest
+    pull: true
+    env:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: db
+    networks:
+      - name: back-network
+    restart_policy: always

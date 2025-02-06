@@ -1,0 +1,12 @@
+---
+- name: Démarrer le proxy httpd
+  docker_container:
+    name: tp1-httpd-1
+    image: etiennechz/tp-httpd:latest
+    pull: true
+    networks:
+      - name: front-network
+    ports:
+      - "80:80"
+      - "8080:8080"
+    restart_policy: always
